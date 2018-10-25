@@ -17,10 +17,13 @@ def grad_f1(x):
     """
     4 marks
 
-    :param x: input array with shape (2, )
+
+    :param x: input array with shape (2, )   like ? [1,2]
     :return: the gradient of f1, with shape (2, )
+
+    answer is  gradient f(x) = (I+B)x -a -b =0
     """
-    pass
+
 
 
 def grad_f2(x):
