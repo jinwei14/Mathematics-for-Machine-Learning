@@ -18,13 +18,16 @@ def grad_f1(x):
     4 marks
 
 
-    :param x: input array with shape (2, )   like ? [1,2]
+    :param x: input array with shape (2, )   2 row x column
     :return: the gradient of f1, with shape (2, )
 
     answer is  gradient f(x) = (I+B)x -a -b =0
     """
-
-
+    matrix_B = np.array([3,-1],[-1,3])
+    matrix_a =np.array([1],[0])
+    matrix_b = np.array([0],[1])
+    fx1 = (np.identity(3) + matrix_B)*x - matrix_a + matrix_b
+    return fx1
 
 def grad_f2(x):
     """
