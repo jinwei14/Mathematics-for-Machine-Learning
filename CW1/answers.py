@@ -25,11 +25,11 @@ def grad_f1(x):
     """
     matrix_B = np.array( [[3,-1],[-1,3]] )
     matrix_a =np.array( [[1],[0]] )
-    matrix_b = np.array( [[0],[1]])
+    matrix_b = np.array( [[0],[-1]])
     #fx1 = 2**.dot(x)  - matrix_a + matrix_b
 
     fx1 = 2*(np.identity(2) + matrix_B).dot(x) - matrix_a + matrix_b
-
+    fx1 = fx1.reshape(2,)
     return fx1
 
 def grad_f2(x):
@@ -57,4 +57,4 @@ def grad_f3(x):
 
 
 
-print(grad_f1(np.array( [ [3],[-1] ])))
+print(grad_f1(np.array( [ [1],[-1] ])))
