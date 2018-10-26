@@ -9,15 +9,17 @@ This file should been in the root of the repository
 """
 
 # NB this is tested on python 2.7. Watch out for integer division
-import autograd.numpy as npa
-import numpy as np
+
+import autograd.numpy as np  # Thinly-wrapped numpy
+from autograd import grad
+#import numpy as np
 import math
 # Thinly wrapped numpy
 
 
 # Basically everything you need
 
-from autograd import grad
+
 
 B = np.array([[3, -1], [-1, 3]])
 a = np.array([[1], [0]])
@@ -59,7 +61,12 @@ def grad_f2(x):
     fx = fx.reshape(2,)
     return  fx
 
+# f3(x) = 1− exp −(x−a)T(x−a) +exp −(x−b)TB(x−b) − 1 log  1 I+xxT
+def f3(x):
 
+    return f3
+
+# Create a function to compute the gradient
 def grad_f3(x):
     """
     This question is optional. The test will still run (so you can see if you are correct by
@@ -70,7 +77,18 @@ def grad_f3(x):
     :param x: input array with shape (2, )
     :return: the gradient of f3, with shape (2, )
     """
-    pass
+    #x = x.reshape(2, 1)
+
+    part1 = np.exp(-1 * np.transpose(x - a).dot(x-a))
+    part2 = np.exp(-1 * np.transpose(x - b).dot(x-b))
+
+    part3 = -(1 / 10) * np.log(abs((1 / 100) * np.identity(2) + x.dot(np.transpose(x))))
+
+    f3 = 1 - part1 - part2 + part3 #this is the function
+
+    grad_f3 = grad(f3)
+
+    return grad_f3(x)
 
 
 
@@ -78,3 +96,7 @@ x= np.array( [ 1,-1 ])
 #print(grad_f1(np.array( [ 1,-1 ])).shape )
 
 print(grad_f2(x).shape )
+
+
+
+
