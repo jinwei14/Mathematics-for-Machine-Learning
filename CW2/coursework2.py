@@ -6,6 +6,10 @@ N = 25
 X = np.reshape(np.linspace(0, 0.9, N), (N, 1))
 Y = np.cos(10*X**2) + 0.1 * np.sin(100*X)
 #K = 12  # order of the func
+listTrainning = []
+for i in np.linspace(0, 0.9, N):
+    listTrainning.append(np.cos(10*i**2) + 0.1 * np.sin(100*i))
+
 
 
 
@@ -37,7 +41,7 @@ def PsiiFill(K):
 def f(x, order):
     fx = 0
     theta_tem = PsiiFill(order)
-    print(theta_tem)
+    #print(theta_tem)
     for k in range(order+1):
         fx = fx + np.dot((x**k), theta_tem[k][0])
     return fx
@@ -75,11 +79,21 @@ font = {'family': 'serif',
         'size': 12,
         }
 
+fontDot = {'family': 'serif',
+        'color':  'red',
+        'weight': 'normal',
+        'size': 12,
+        }
+print(testingX)
+plt.plot(np.linspace(0, 0.9, N), listTrainning, 'ro')
+plt.text(0.2, 3, r'Pink Dot: tranning data', fontdict=fontDot)
+
+
 plt.plot(testingX, list_Y_0, 'b')
 plt.text(-0.2, 0.35, r'order 0', fontdict=font)
 
 plt.plot(testingX, list_Y_1, 'g')
-plt.text(1.10, -0.5, r'order 1', fontdict=font)
+plt.text(1.1, -0.5, r'order 1', fontdict=font)
 
 plt.plot(testingX, list_Y_2, 'r')
 plt.text(-0.28, 3.0, r'order 2', fontdict=font)
