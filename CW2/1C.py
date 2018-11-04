@@ -131,8 +131,14 @@ font = {'family': 'serif',
         'size': 12,
         }
 
-fontDot = {'family': 'serif',
-        'color':  'red',
+fontBlue = {'family': 'serif',
+        'color':  'blue',
+        'weight': 'normal',
+        'size': 12,
+        }
+
+fontGreen = {'family': 'serif',
+        'color':  'green',
         'weight': 'normal',
         'size': 12,
         }
@@ -144,10 +150,14 @@ fontDot = {'family': 'serif',
 
 print(lsitSigmaS)
 plt.plot(orderList, lsitSigmaS)
+plt.text(4, 0.5, r'Blue: maximum likelihood estimate', fontdict=fontBlue)
+
 plt.plot(orderList, listAverage_Squared_test_error, 'g-')
-plt.title('maximum likelihood value for $\sigma_ML^2$', fontdict=font)
+plt.text(4, 0.45, r'Green: leave-one-out cross validation', fontdict=fontGreen)
+
+plt.title('maximum likelihood value for $\sigma_{ML}^2$', fontdict=font)
 plt.xlabel('Order', fontdict=font)
-plt.ylabel(r'$\sigma_ML^2$', fontdict=font)
+plt.ylabel(r'$\sigma_{ML}^2$', fontdict=font)
 
 
 # plt.plot(testingX, list_Y_11, 'm')
