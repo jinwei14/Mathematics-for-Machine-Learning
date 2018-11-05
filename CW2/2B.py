@@ -5,7 +5,7 @@ from numpy.linalg import inv
 N = 25
 X = np.reshape(np.linspace(0, 0.9, N), (N, 1))
 Y = np.cos(10*X**2) + 0.1 * np.sin(100*X)
-lamda = 0.01
+lamda = 10.5
 # lamda = 1.5
 # lamda = 10.0
 #K = 12  # order of the func
@@ -19,9 +19,9 @@ def PsiiFill(K):
     Psii = np.zeros((N, K + 1))
     for i in range(N):
         for j in range(0, K+1):
-            Psii[i][j] = np.exp((-(X[i][0]-mul(j))**2) / 2*0.01)
+            Psii[i][j] = np.exp((-(X[i][0]-mul(j))**2) / 0.02)
 
-    theta = np.dot(np.dot(inv(np.dot(Psii.T, Psii)+lamda * np.identity(len(np.dot(Psii.T, Psii)))), Psii.T), Y)
+    theta = np.dot(np.dot(inv(np.dot(Psii.T, Psii) + lamda * np.identity(len(np.dot(Psii.T, Psii)))), Psii.T), Y)
     return theta
 
 def mul(j):
@@ -66,32 +66,35 @@ fontBlue = {'family': 'serif',
         'size': 12,
         }
 
-# list_Y_0 = []
-# for i in testingX:
-# # print(f(i))
-#     list_Y_0.append(f(i, 11))
-# print(list_Y_0)
-# plt.plot(testingX, list_Y_0)
-# plt.text(-0.2, 1, r'order x', fontdict=font)
-# # order 0 to 10
-lsitSigmaS = []
-orderList = []
-for ord in range(20):
-    orderList.append(ord)
-    lsitSigmaS.append(sigmaSquare(ord))
-
-print(lsitSigmaS)
-plt.plot(orderList, lsitSigmaS)
-plt.text(4, 0.5, r'Blue: maximum likelihood estimate', fontdict=fontBlue)
-
+list_Y_0 = []
+for i in testingX:
+# print(f(i))
+    list_Y_0.append(f(i, 19))
+print(list_Y_0)
+plt.plot(testingX, list_Y_0)
+plt.text(-0.2, 1, r'order x', fontdict=font)
 
 # print(testingX)
 plt.plot(np.linspace(0, 0.9, N), listTrainning, 'ro')
 plt.text(0.2, 3, r'Pink Dot: tranning data', fontdict=fontDot)
 
+# order 0 to 10
+
+# lsitSigmaS = []
+# orderList = []
+# for ord in range(20):
+#     orderList.append(ord)
+#     lsitSigmaS.append(sigmaSquare(ord))
+#
+# print(lsitSigmaS)
+# plt.plot(orderList, lsitSigmaS)
+# plt.text(4, 0.5, r'Blue: maximum likelihood estimate', fontdict=fontBlue)
 
 
 
 
-plt.axis([-0.3, 1.3, -1.5, 4])
+
+
+
+plt.axis([-0.3, 1.3, -2, 2])
 plt.show()
