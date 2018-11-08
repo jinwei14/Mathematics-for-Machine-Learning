@@ -74,5 +74,5 @@ plt.text(0.9, -1.0, r'order 1:green', fontdict=font)
 plt.plot(testingX, list_Y_11, 'm')
 plt.text(-0.2, -1.0, r'order 11: magenta', fontdict=font)
 
-plt.axis([-0.3, 1.3, -2, 2])
+plt.axis([-1, 1.2, -2, 2])
 plt.show()

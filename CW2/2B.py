@@ -5,7 +5,7 @@ from numpy.linalg import inv
 N = 25
 X = np.reshape(np.linspace(0, 0.9, N), (N, 1))
 Y = np.cos(10*X**2) + 0.1 * np.sin(100*X)
-lamda = 10.5
+lamda = 0.1
 # lamda = 1.5
 # lamda = 10.0
 #K = 12  # order of the func
@@ -72,12 +72,13 @@ for i in testingX:
     list_Y_0.append(f(i, 19))
 print(list_Y_0)
 plt.plot(testingX, list_Y_0)
-plt.text(-0.2, 1, r'order x', fontdict=font)
+plt.text(-0.2, 1.5, r'lamda = 0.1', fontdict=font)
 
 # print(testingX)
 plt.plot(np.linspace(0, 0.9, N), listTrainning, 'ro')
-plt.text(0.2, 3, r'Pink Dot: tranning data', fontdict=fontDot)
-
+plt.text(0.2, 1.5, r'Pink Dot: tranning data', fontdict=fontDot)
+plt.xlabel('x', fontdict=font)
+plt.ylabel(r'$f(x)$', fontdict=font)
 # order 0 to 10
 
 # lsitSigmaS = []
