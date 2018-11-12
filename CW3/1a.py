@@ -24,13 +24,12 @@ def Phi(K):
     for i in range(N):
         for j in range(0, K+1):
             Psii[i][j] = X[i][0]**j
-
-    theta = np.dot(np.dot(inv(np.dot(Psii.T, Psii)), Psii.T), Y)
-    return theta
+    return Psii
 
 def lml(alpha, beta, Phi, Y):
+    logFunc  = (-N/2)*np.log(2*np.pi) - 0.5*np.log()
     return 0
 
 
 def grad_lml(alpha, beta, Phi, Y):
-    return 0
+    return 2
