@@ -47,6 +47,7 @@ def grad_lml(alpha, beta, Phi, Y):
     :param Y: array of shape (N, 1)
     :return: array of shape (2,). The components of this array are the gradients
     (d_lml_d_alpha, d_lml_d_beta), the gradients of lml with respect to alpha and beta respectively.
+
     """
     pass
 
