@@ -28,6 +28,7 @@ def Phi(K):
 
 def lml(alpha, beta, Phi, Y):
     logFunc  = (-N/2)*np.log(2*np.pi) - 0.5*np.log()
+
     return 0
 
 
