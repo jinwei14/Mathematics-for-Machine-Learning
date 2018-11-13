@@ -49,10 +49,17 @@ def grad_lml(alpha, beta, Phi, Y):
     (d_lml_d_alpha, d_lml_d_beta), the gradients of lml with respect to alpha and beta respectively.
 
     """
-    pass
+    N = len(Phi)
+    M = len(Phi[0])
+    X = np.dot(np.dot(alpha, Phi), Phi.T) + np.dot(beta, np.identity(N))
+    common = 0.5 * np.dot(np.dot(inv(X), np.dot(Y, Y.T) - X), inv(X))
+    d_alpha = np.trace(np.dot(common.T, np.dot(Phi, Phi.T)))
+    d_bete = np.trace(common.T)
+
+    return np.array([d_alpha, d_bete])
 
 # Phi = np.array([[1,2],[1,3]])
-#
+#a
 # Y = np.array([[-0.75426779],[-0.5480492]])
 #
 # print(lml(2.0, 4.0, Phi, Y))
