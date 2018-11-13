@@ -69,11 +69,11 @@ def grad_lml(alpha, beta, Phi, Y):
 Phi = Phi(1)
 # From calculation, it is expected that the local minimum occurs at x=9/4
 
-cur_x = np.array([0.6, 0.65]) # The algorithm starts at x=1
-gamma = 0.025 # step size multiplier
+cur_x = np.array([0.5, 0.65]) # The algorithm starts at x=1
+gamma = 0.01 # step size multiplier
 
 
-max_iters = 50 # maximum number of iterations
+max_iters = 20000 # maximum number of iterations
 iters = 0 #iteration counter
 
 x_gd = []
@@ -102,12 +102,12 @@ Z = np.zeros((50, 50))
 for i in range(50):
     for j in range(50):
         #Z[i][j] = f2(np.array([xlist[i], ylist[j]]))
-        Z[i][j] = lml(xlist[i], ylist[j], Phi, Y_train)
+        Z[i][j] = lml(X[i,j], Y[i,j], Phi, Y_train)
 
 # print(Z)
-plt.contour(X.T, Y.T, Z, 100, cmap='jet')
+plt.contour(X, Y, Z, 100, cmap='jet')
 plt.colorbar()
 
-plt.plot(x_gd, y_gd, color='green', marker='v', linestyle='dashed', linewidth=2, markersize=4)
+plt.plot(x_gd, y_gd, color='green', marker='v', linewidth=2, markersize=0)
 plt.show()
 #print(theta)
