@@ -108,6 +108,7 @@ for i in range(50):
 plt.contour(X, Y, Z, 100, cmap='jet')
 plt.colorbar()
 
-plt.plot(x_gd, y_gd, color='green', marker='v', linewidth=2, markersize=0, )
+plt.plot(x_gd, y_gd, color='green', marker='v', linewidth=2, markersize=0, label='Gradient descent')
+plt.legend(loc='best')
 plt.show()
 #print(theta)
