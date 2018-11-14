@@ -16,11 +16,15 @@ for i in np.linspace(0, 0.9, N):
 def Phi(K):
     Psii = np.zeros((N, K + 1))
     for i in range(N):
-        for j in range(0, K+1):
-            Psii[i][j] = X[i][0]**j
+        Psii[i][0] = 1
+        for j in range(1, K+1):
+            Psii[i][j] = np.exp((-(X[i][0]-mul(j-1))**2) / 0.02)
 
     return Psii
 
+def mul(j):
+    x = np.linspace(-0.5, 1, 10)
+    return x[j]
 
 def lml(alpha, beta, Phi, Y):
     """
@@ -66,49 +70,16 @@ def grad_lml(alpha, beta, Phi, Y):
     return np.array([d_alpha, d_bete])
 
 #order = 1
-Phi = Phi(1)
+Phi = Phi(10)
+print(Phi.shape)
+alpha = 1.0
+beta = 0.1
+S_n = (inv(alpha*np.identity(len(Phi))))
+print(Phi)
 # From calculation, it is expected that the local minimum occurs at x=9/4
 
-cur_x = np.array([0.5, 0.65]) # The algorithm starts at x=1
-gamma = 0.01 # step size multiplier
 
-
-max_iters = 20000 # maximum number of iterations
-iters = 0 #iteration counter
-
-x_gd = []
-y_gd = []
-z_gd = []
-while (iters < max_iters):
-    x_gd.append(cur_x[0])
-    y_gd.append(cur_x[1])
-    z_gd.append(lml(cur_x[0],cur_x[1], Phi, Y_train))
-
-    prev_x = np.array([cur_x[0], cur_x[1]])
-    #cur_x = prev_x + gamma * grad_f2(prev_x)
-    cur_x = prev_x + gamma * grad_lml(prev_x[0], prev_x[1], Phi, Y_train)
-    iters += 1
-
-print("The local maximum occurs at", cur_x)
-
-xlist = np.linspace(0.2, 1.0, 50)
-ylist = np.linspace(0.3, 0.7, 50)
-
-X, Y = np.meshgrid(xlist, ylist)
-# new an array with all 0 inside
-Z = np.zeros((50, 50))
-
-
-for i in range(50):
-    for j in range(50):
-        #Z[i][j] = f2(np.array([xlist[i], ylist[j]]))
-        Z[i][j] = lml(X[i,j], Y[i,j], Phi, Y_train)
-
-# print(Z)
-plt.contour(X, Y, Z, 100, cmap='jet')
-plt.colorbar()
-
-plt.plot(x_gd, y_gd, color='green', marker='v', linewidth=2, markersize=0, label='Gradient descent')
-plt.legend(loc='best')
-plt.show()
+# plt.plot(x_gd, y_gd, color='green', marker='v', linewidth=2, markersize=0, label='Gradient descent')
+# plt.legend(loc='best')
+# plt.show()
 #print(theta)
