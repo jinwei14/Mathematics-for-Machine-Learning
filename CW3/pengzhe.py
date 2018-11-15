@@ -42,14 +42,14 @@ def Phi1(X):
 alpha = 1.0
 beta = 0.1
 Phi = Phi1(X)
-print(Phi)
+# print(Phi)
 
 s_N = np.array(np.linalg.inv(np.dot(Phi.T, Phi) / beta + 1 / alpha * np.eye(Phi.shape[1])))
 m_N = np.array(np.dot(s_N, np.dot(Phi.T, Y) * 1.0 / beta)).reshape((1, 11))
 print(s_N.shape)
 print(m_N.shape)
 samples = np.random.multivariate_normal(m_N[0], s_N, 5)
-print(samples.shape)
+# print(samples.shape)
 
 # test points
 X_test = np.reshape(np.linspace(-1, 1.5, 200), (200, 1))

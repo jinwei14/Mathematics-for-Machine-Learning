@@ -26,6 +26,19 @@ def mul(j):
     x = np.linspace(-0.5, 1, 10)
     return x[j]
 
+
+X_test = np.reshape(np.linspace(-1, 1.5, 200), (200, 1))
+def PhiTest(K):
+    Psii = np.zeros((200, K + 1))
+    for i in range(200):
+        Psii[i][0] = 1
+        for j in range(1, K+1):
+            Psii[i][j] = np.exp((-(X_test[i][0]-mul(j-1))**2) / 0.02)
+
+    return Psii
+
+
+
 def lml(alpha, beta, Phi, Y):
     """
     4 marks
@@ -74,12 +87,80 @@ Phi = Phi(10)
 print(Phi.shape)
 alpha = 1.0
 beta = 0.1
-S_n = (inv(alpha*np.identity(len(Phi))))
-print(Phi)
-# From calculation, it is expected that the local minimum occurs at x=9/4
+S_n = (inv(alpha*np.identity(len(Phi.T)) + (1/beta)*np.dot(Phi.T, Phi)))
+# print(S_n.shape)
+M_n = np.dot(S_n, (1/beta)*np.dot(Phi.T,  Y_train)).reshape(1,11)
+# print(M_n.shape)
+samples = np.random.multivariate_normal(M_n[0], S_n, 5)
+# print(samples.shape)
+
+
+
+
+Phi_test = PhiTest(10)
+print(Phi_test.shape)
+
+index = 1
+# ---------------Predictive mean------------------
+for sample in samples:
+    print(index)
+    mean = np.dot(Phi_test, sample)
+    # print(sample.shape)
+    plt.plot(X_test, mean, label='sample'+str(index))
+    index += 1
+
+# ------------------ mean and covariance ------------------
+
+# 求均值和方差(没有noise)
+upper = []
+lower = []
+for i in range(200):
+    get_Phi = Phi_test[i]
+    miu = np.dot(M_n, np.transpose(get_Phi))
+    sigma1 = np.sqrt(np.dot(get_Phi, np.dot(S_n, get_Phi.T)))
+    # print(sigma1.shape)
+
+    m = miu + 2 * sigma1
+    upper.append(m)
+    n = miu - 2 * sigma1
+    lower.append(n)
+
+upper = np.array(upper).reshape((1, 200))
+upper = upper[0]
+lower = np.array(lower).reshape((1, 200))
+lower = lower[0]
+
+# 求均值和方差(有noise)
+upper1 = []
+lower1 = []
+for i in range(200):
+    get_Phi = Phi_test[i]
+    miu1 = np.dot(M_n, np.transpose(get_Phi))
+    sigma2 = np.sqrt(np.dot(get_Phi, np.dot(S_n, get_Phi.T)) + beta)
+
+    m = miu1 + 2 * sigma2
+    upper1.append(m)
+    n = miu1 - 2 * sigma2
+    lower1.append(n)
+
+upper1 = np.array(upper1).reshape((1, 200))
+upper1 = upper1[0]
+lower1 = np.array(lower1).reshape((1, 200))
+lower1 = lower1[0]
+
+x_ = X_test.reshape((1, 200))
+
+# shaded bars
+plt.plot(x_[0], upper1, '--', label='upper-bound with the noise')
+plt.plot(x_[0], lower1, '--', label='lower-bound without the noise')
+plt.fill_between(x_[0], upper, lower, where=upper >= lower, alpha=0.5,
+                 label='standard deviations error without noise',facecolor = 'grey')
 
 
 # plt.plot(x_gd, y_gd, color='green', marker='v', linewidth=2, markersize=0, label='Gradient descent')
-# plt.legend(loc='best')
-# plt.show()
+plt.xlabel('Test inputs')
+plt.ylabel('Predictive mean')
+plt.legend(loc='best',framealpha = 0.5)
+plt.axis([-1, 1.5, -3, 6])
+plt.show()
 #print(theta)
