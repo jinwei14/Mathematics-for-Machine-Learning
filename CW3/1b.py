@@ -90,6 +90,7 @@ while (iters < max_iters):
     iters += 1
 
 print("The local maximum occurs at", cur_x)
+print("the maximum is ", lml(cur_x[0], cur_x[1], Phi, Y_train))
 
 xlist = np.linspace(0.2, 1.0, 50)
 ylist = np.linspace(0.3, 0.7, 50)
@@ -108,7 +109,10 @@ for i in range(50):
 plt.contour(X, Y, Z, 100, cmap='jet')
 plt.colorbar()
 
-plt.plot(x_gd, y_gd, color='green', marker='v', linewidth=2, markersize=0, label='Gradient descent')
+plt.plot(x_gd, y_gd, color='green', marker='v', linewidth=2, markersize=0, label='Gradient descent of order 1')
 plt.legend(loc='best')
+plt.ylabel('beta')
+plt.xlabel('alpha')
+plt.title('this 1 b')
 plt.show()
 #print(theta)

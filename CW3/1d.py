@@ -84,13 +84,12 @@ def grad_lml(alpha, beta, Phi, Y):
 
 #order = 1
 Phi = Phi(10)
-print(Phi.shape)
 alpha = 1.0
 beta = 0.1
 S_n = (inv(alpha*np.identity(len(Phi.T)) + (1/beta)*np.dot(Phi.T, Phi)))
-# print(S_n.shape)
-M_n = np.dot(S_n, (1/beta)*np.dot(Phi.T,  Y_train)).reshape(1,11)
-# print(M_n.shape)
+
+M_n = np.dot(S_n, (1/beta)*np.dot(Phi.T,  Y_train)).reshape(1, 11)
+
 samples = np.random.multivariate_normal(M_n[0], S_n, 5)
 # print(samples.shape)
 
@@ -98,7 +97,6 @@ samples = np.random.multivariate_normal(M_n[0], S_n, 5)
 
 
 Phi_test = PhiTest(10)
-print(Phi_test.shape)
 
 index = 1
 # ---------------Predictive mean------------------
@@ -151,8 +149,8 @@ lower1 = lower1[0]
 x_ = X_test.reshape((1, 200))
 
 # shaded bars
-plt.plot(x_[0], upper1, '--', label='upper-bound with the noise')
-plt.plot(x_[0], lower1, '--', label='lower-bound without the noise')
+plt.plot(x_[0], upper1, '--', label='standard deviation with noise')
+plt.plot(x_[0], lower1, '--', label='standard deviation with noise')
 plt.fill_between(x_[0], upper, lower, where=upper >= lower, alpha=0.5,
                  label='standard deviations error without noise',facecolor = 'grey')
 
