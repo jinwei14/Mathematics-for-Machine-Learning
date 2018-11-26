@@ -1,0 +1,23 @@
+% to be completed
+
+% to be completed U_reduc = PCA(fea_Train,size(fea_Train,1)-1); 
+function W = LDA(fea_Train,gnd_Train)
+    X = fea_Train';
+    label = gnd_Train';
+    [~,p] = size(label);
+    [~,n] = size(X);
+    diaArray = zeros(1,p); 
+    for i=1:p
+       diaArray(i) = [diaArray; sum(gnd_Train(:) == label(i))];
+    end
+    
+    %(I ? M)X^T X(I ? M) = V_w ?_w V_w^T 
+    M = diag(diaArray);
+    [V,A] = eig((eye(n) - M)* X'* X *(eye(n) - M));
+    
+    
+    
+
+
+    W =U_d;
+end
