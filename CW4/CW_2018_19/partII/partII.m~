@@ -39,27 +39,27 @@ end
 
 function [a, R] = calcRandCentre(data)
 
-        % to be completed
+    % to be completed
+    
+% Initialise values needed for quadprog.
+% Arbitrary C value.
+C = 0.4;
 
-        % Initialise values needed for quadprog.
-        % Arbitrary C value.
-        C = 0.4;
+% Apply linear kernel to data points for each class
+K_x_C1 = data1' * data1;
+K_x_C2 = data2' * data2;
+y1 = ones(1, 100);
+y2 = -ones(1, 100);
+y = [y1 y2]';
 
-        % Apply linear kernel to data points for each class
-        K_x_C1 = data1' * data1;
-        K_x_C2 = data2' * data2;
-        y1 = ones(1, 100);
-        y2 = -ones(1, 100);
-        y = [y1 y2]';
-
-        % Identify parameters to quadprog function.
-        f_C1 = -(diag(K_x_C1))';
-        f_C2 = -(diag(K_x_C2))';
-        A = zeros(1, 100);
-        H_C1 = 2 * K_x_C1;
-        H_C2 = 2 * K_x_C2;
-        c = 0;
-        A_e = ones(1, 100);
+% Identify parameters to quadprog function.
+f_C1 = -(diag(K_x_C1))';
+f_C2 = -(diag(K_x_C2))';
+A = zeros(1, 100);
+H_C1 = 2 * K_x_C1;
+H_C2 = 2 * K_x_C2;
+c = 0;
+A_e = ones(1, 100);
         c_e = 1;
         g_l = zeros(100,1);
         g_u = C * ones(100,1);
@@ -87,18 +87,6 @@ function [a, R] = calcRandCentre(data)
         for j = 1 : 100
             a_C2 = a_C2 + lambda_C2(j) * data2(:, j);
         end
-        
-        % Plot optimal hypersphere - plot circle using center (vector a) and rad.
-        centerX = a_C1(1); centerY = a_C1(2); radius = optR_C1;
-        theta = 0 : (pi / 50) : (2 * pi);
-        xunit = radius * cos(theta) + centerX;
-        yunit = radius * sin(theta) + centerY;
-        
-        
-    centerX = a_C2(1); centerY = a_C2(2); radius = optR_C2;
-    theta = 0 : (pi / 50) : (2 * pi);
-    xunit = radius * cos(theta) + centerX;
-    yunit = radius * sin(theta) + centerY;
 
 
 end
