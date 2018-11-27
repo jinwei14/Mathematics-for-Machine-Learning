@@ -6,14 +6,21 @@ function W = LDA(fea_Train,gnd_Train)
     label = gnd_Train';
     [~,p] = size(label);
     [~,n] = size(X);
-    diaArray = zeros(1,p); 
-    for i=1:p
-       diaArray(i) =  sum(gnd_Train(:) == label(i));
+%    diaArray = zeros(1,p); 
+    M = zeros(n,n); 
+    i = 1;
+    while i<p
+       number =  sum(gnd_Train(:) == label(i));
+       E(1:number,1:number) = 1/number;
+       M(i :i + number-1,i :i + number-1) = E;
+       i = i + number;
     end
     
+
     %(I ? M)X^T X(I ? M) = V_w ?_w V_w^T 
-    M = diag(diaArray);
-    [V,A] = eig((eye(n) - M)* (X' * X) *(eye(n) - M));
+    k_w = (eye(n) - M)* (X' * X) *(eye(n) - M);
+    [V,A] = eig(0.5*(k_w*k_w'));
+   
     % U = X(I ? M) Vw ?w?1
     U = X*(eye(n) - M)*V*A^(-1);
     X_head = U' * X * M;
@@ -24,9 +31,5 @@ function W = LDA(fea_Train,gnd_Train)
     Q = Q(:,index);
     
     %The total transform is W = UQ
-    
-    
-
-
     W =U*Q;
 end
