@@ -44,18 +44,18 @@ function [a, R] = calcRandCentre(data)
 
 % Initialise values needed for quadprog.
 % Arbitrary C value.
-C = 0.4;
+C = 10000;
 
-% Apply linear kernel to data points for each class
+% use linear kernel to every data points for each class 
 K_x = data * data';
-% y1 = ones(1, 100);
-% y2 = -ones(1, 100);
-% y = [y1 y2]';
 
-% Identify parameters to quadprog function.
+% parameters H in quadprog function.
 H = 2 * K_x;
+
+% parameters f in quadprog function.
 f = -(diag(K_x))';
 
+% Ag <= c. g is lambda so that A is a row zero
 A = zeros(1, 100);
 
 c = 0;
@@ -75,7 +75,7 @@ opt = -diag(K_x)' * lambda + lambda' * K_x * lambda;
 opt_Radius = sqrt(-opt);
 
 
-% Find vector a (given by sum of x and lambda, see report) for each class.
+% for each class Find a vector that is the sum of lambda*x
 a = zeros(2, 1);
 for j = 1 : 100
     a = a + lambda(j) * data(j);

@@ -44,38 +44,42 @@ function [a, R] = calcRandCentre(data)
 
 % Initialise values needed for quadprog.
 % Arbitrary C value.
-C = 0.4;
+C = 10000;
 
-% Apply linear kernel to data points for each class
+% use linear kernel to every data points for each class 
 K_x = data * data';
-% y1 = ones(1, 100);
-% y2 = -ones(1, 100);
-% y = [y1 y2]';
 
-% Identify parameters to quadprog function.
+% parameters H in quadprog function.
 H = 2 * K_x;
+
+% parameters f in quadprog function.
 f = -(diag(K_x))';
 
+% Ag <= c. g is lambda so that A is a row zero
 A = zeros(1, 100);
 
+% c ia zero since we do not have this constratin
 c = 0;
+
+%  A_e * g = Ce  match vector 1*lambda = 1
 A_e = ones(1, 100);
 c_e = 1;
+
+% 0 vector <=lambda <= C vector 
 g_l = zeros(100,1);
 g_u = C * ones(100,1);
 
-% Find optimal Lagrangian multipliers for each class.
+% fill in quadprog
 lambda = quadprog(H, f, A, c, A_e, c_e, g_l, g_u);
 
 
-% Substitute optimal lambda to Lagrangian. Solution is equal to the optimal
-% solution for primal problem (-d* = p*). We can then solve for R to find
-% optimal radius of circle.
+% take variable into the function.
+%We can then solve for R to find optimal radius of circle.
 opt = -diag(K_x)' * lambda + lambda' * K_x * lambda;
 opt_Radius = sqrt(-opt);
 
 
-% Find vector a (given by sum of x and lambda, see report) for each class.
+% for each class Find a vector that is the sum of lambda*x
 a = zeros(2, 1);
 for j = 1 : 100
     a = a + lambda(j) * data(j);
