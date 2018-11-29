@@ -1,17 +1,17 @@
-function U_reduc=LDA(X,class_label)
+function U_reduc=LDA(X,class_set)
 
     X=X'; 
-    %data centering using the smart way
+    %data centering
     [~,n] = size(X);
     X_mean = X * (eye(n) - (1/n)*ones(n,1)*ones(n,1)');
 
     %compute M compute Ei
     M=zeros(size(X_mean,2));
     n=1;
-    classes=unique(class_label); 
+    classes=unique(class_set); 
     class_num=length(classes); 
     for i=1:class_num
-        Nc_i=sum(class_label==classes(i)); 
+        Nc_i=sum(class_set==classes(i)); 
         Ei=(1/Nc_i)*ones(Nc_i,Nc_i); 
         M(n:n+Nc_i-1,n:n+Nc_i-1)=Ei; 
         n=n+Nc_i;
