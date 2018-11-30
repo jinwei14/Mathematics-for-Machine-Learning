@@ -5,10 +5,12 @@ function U_reduc=LDA(X,class_label)
     [~,n] = size(X);
     X_mean = X * (eye(n) - (1/n)*ones(n,1)*ones(n,1)');
 
-    %compute M compute Ei
+    %compute M the mean matrix
     M=zeros(size(X_mean,2));
     n=1;
     classes=unique(class_label); 
+    
+    % get the number of labels/ class
     class_num=length(classes); 
     for i=1:class_num
         Nc_i=sum(class_label==classes(i)); 
@@ -24,7 +26,7 @@ function U_reduc=LDA(X,class_label)
     %Sw=(I-M)*(X_bar)'*X_bar*(I-M);
     [Vw,Dw]=eigs(kw,size(X_mean,2)-class_num-1); 
 
-    %compute U
+    %computing U = X(I ? M)Vw?w?1
     U=X_mean*(I-M)*Vw*Dw^(-1);
 
     %compute Sb
